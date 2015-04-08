@@ -9,11 +9,11 @@
     {% for game in games %}
     <li> {{ game.match_id }} - {{ game.radiant }} - {{ game.dire }}
         <ul>
-        {% for (k,v) in game.dire_tower_status %}
-            <li>{{ k }} : {{ v }}</li>
+        {% for k in game.dire_tower_status %}
+            <li>{{ k }} : {{ game.dire_tower_status[k] }}</li>
         {% endfor %}
-        {% for (k,v) in game.radiant_tower_status %}
-            <li>{{ k }} : {{ v }}</li>
+        {% for k in game.radiant_tower_status %}
+            <li>{{ k }} : {{ game.radiant_tower_status[k] }}</li>
         {% endfor %}
         </ul>
     </li>

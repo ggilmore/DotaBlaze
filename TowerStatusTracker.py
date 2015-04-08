@@ -18,26 +18,28 @@ def getSideString(isRadiant):
 
 def towerStatus(isRadiant, towerStatusStringRaw):
     sideTowerBitStringLength = 13
-    assert len(towerStatusStringRaw) == sideTowerBitStringLength
-    towerStatusString = towerStatusStringRaw[2:]
+    if len(towerStatusStringRaw) == sideTowerBitStringLength:
+        towerStatusString = towerStatusStringRaw[2:]
 
-    ancientBits = towerStatusString[:ANCIENT_INDEX]
-    bottomBits = towerStatusString[ANCIENT_INDEX:BOTTOM_INDEX]
-    middleBits = towerStatusString[BOTTOM_INDEX:MIDDLE_INDEX]
-    topBits = towerStatusString[MIDDLE_INDEX:TOP_INDEX]
+        ancientBits = towerStatusString[:ANCIENT_INDEX]
+        bottomBits = towerStatusString[ANCIENT_INDEX:BOTTOM_INDEX]
+        middleBits = towerStatusString[BOTTOM_INDEX:MIDDLE_INDEX]
+        topBits = towerStatusString[MIDDLE_INDEX:TOP_INDEX]
 
-    ancientDict = towerStatusHelper(u" Ancient", True, ancientBits)
-    bottomDict = towerStatusHelper(u" Bottom", False, bottomBits)
-    middleDict = towerStatusHelper(u" Middle", False, middleBits)
-    topDict = towerStatusHelper(u" Top", False, topBits)
+        ancientDict = towerStatusHelper(u" Ancient", True, ancientBits)
+        bottomDict = towerStatusHelper(u" Bottom", False, bottomBits)
+        middleDict = towerStatusHelper(u" Middle", False, middleBits)
+        topDict = towerStatusHelper(u" Top", False, topBits)
 
-    sideString = getSideString(isRadiant)
-    towerStatusNoSide = {}
+        sideString = getSideString(isRadiant)
+        towerStatusNoSide = {}
 
-    for dictionary in [ancientDict, bottomDict, middleDict, topDict]:
-        towerStatusNoSide.update(dictionary)
+        for dictionary in [ancientDict, bottomDict, middleDict, topDict]:
+            towerStatusNoSide.update(dictionary)
 
-    return {sideString + k: v for (k, v) in towerStatusNoSide.iteritems()}
+        return {sideString + k: v for (k, v) in towerStatusNoSide.iteritems()}
+    else:
+        return {}
 
 
 def towerStatusHelper(locationString, isAncient, towerStatusString):

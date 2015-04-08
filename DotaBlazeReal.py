@@ -10,9 +10,9 @@ app = Flask(__name__)
 def index():
     r = requests.get("https://api.steampowered.com/IDOTA2Match_570/GetLiveLeagueGames/v0001/?key=12B9C2C08AAC635D3A305D7D26793738")
     games = processResponse(r.json()[u"result"][u"games"])
-    print games
-    return render_template("index.html", games)
+    games
+    return render_template("index.html", games=games)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
 
