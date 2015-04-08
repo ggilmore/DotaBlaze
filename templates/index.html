@@ -7,7 +7,16 @@
 <body>
 <ul>
     {% for game in games %}
-    <li> {{ game.match_id }} - {{ game.radiant }} - {{ game.dire }}</li>
+    <li> {{ game.match_id }} - {{ game.radiant }} - {{ game.dire }}
+        <ul>
+        {% for (k,v) in game.dire_tower_status %}
+            <li>{{ k }} : {{ v }}</li>
+        {% endfor %}
+        {% for (k,v) in game.radiant_tower_status %}
+            <li>{{ k }} : {{ v }}</li>
+        {% endfor %}
+        </ul>
+    </li>
     {% endfor %}
 </ul>
 </body>
