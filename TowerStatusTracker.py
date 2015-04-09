@@ -34,7 +34,7 @@ def towerStatus(isRadiant, towerStatusStringRaw):
         sideString = getSideString(isRadiant)
         towerStatusNoSide = []
 
-        for tempList in [topDict, bottomDict, middleDict, ancientDict]:
+        for tempList in [topDict, middleDict, bottomDict, ancientDict]:
             towerStatusNoSide.extend(tempList)
 
         return [(sideString+entry[0], entry[1]) for entry in towerStatusNoSide]
