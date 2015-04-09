@@ -7,13 +7,17 @@
 <body>
 <ul>
     {% for game in games %}
-    <li> {{ game.match_id }} - {{ game.radiant }} - {{ game.dire }}
+        <br>
+    <li> {{ game.match_id }}
         <ul>
+        <strong><p>Dire Team: {{ game.dire }}</p></strong>
         {% for k in game.dire_tower_status %}
-            <li>{{ k }} : {{ game.dire_tower_status[k] }}</li>
+            <li>{{ k[0] }} : {{ "Alive" if k[1] else "Destroyed"}}</li>
         {% endfor %}
+        <br>
+        <strong><p>Radiant Team: {{ game.radiant }}</p></strong>
         {% for k in game.radiant_tower_status %}
-            <li>{{ k }} : {{ game.radiant_tower_status[k] }}</li>
+            <li>{{ k[0] }} : {{ "Alive" if k[1] else "Destroyed" }}</li>
         {% endfor %}
         </ul>
     </li>

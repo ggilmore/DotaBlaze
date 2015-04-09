@@ -32,14 +32,14 @@ def towerStatus(isRadiant, towerStatusStringRaw):
         topDict = towerStatusHelper(u" Top", False, topBits)
 
         sideString = getSideString(isRadiant)
-        towerStatusNoSide = {}
+        towerStatusNoSide = []
 
-        for dictionary in [ancientDict, bottomDict, middleDict, topDict]:
-            towerStatusNoSide.update(dictionary)
+        for tempList in [topDict, bottomDict, middleDict, ancientDict]:
+            towerStatusNoSide.extend(tempList)
 
-        return {sideString + k: v for (k, v) in towerStatusNoSide.iteritems()}
+        return [(sideString+entry[0], entry[1]) for entry in towerStatusNoSide]
     else:
-        return {}
+        return []
 
 
 def towerStatusHelper(locationString, isAncient, towerStatusString):
@@ -48,9 +48,10 @@ def towerStatusHelper(locationString, isAncient, towerStatusString):
         tier3 = towerStatusString[0] == u"1"
         tier2 = towerStatusString[1] == u"1"
         tier1 = towerStatusString[2] == u"1"
-        return {locationString + u" Tier 3": tier3, locationString + u" Tier 2": tier2, locationString + u" Tier 1": tier1}
+        return [(locationString + u" Tier 3", tier3), (locationString + u" Tier 2", tier2),
+                (locationString + u" Tier 1", tier1)]
     else:
         assert len(towerStatusString) == 2
         top = towerStatusString[0] == u"1"
         bot = towerStatusString[1] == u"1"
-        return {locationString + u" Top": top, locationString + u" Bottom": bot}
+        return [(locationString + u" Top", top), (locationString + u" Bottom", bot)]
