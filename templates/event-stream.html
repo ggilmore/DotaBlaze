@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Stream of Events</title>
+</head>
+<body>
+  <ul>
+      {% for event in events %}
+      <li>
+          {{ event.time_stamp }} -
+          <a href="#">{{ event.match_id }}</a> -
+          <a href="#radiant">{{ event.radiant_team_name }}</a> vs.
+          <a href="#dire">{{ event.dire_team_name }}</a> -
+          {{ event.description }}
+      </li>
+      {% endfor %}
+  </ul>
+</body>
+</html>

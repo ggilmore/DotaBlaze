@@ -25,6 +25,11 @@ def matches():
     return str(worker.get_match_change_history())
     # return render_template("matches.html", updates=match_updates)
 
+@app.route('/events')
+def events():
+    events = worker.get_match_change_history()
+    return render_template("event-stream.html", events=events)
+
 if __name__ == '__main__':
     app.run(debug=True)
 
