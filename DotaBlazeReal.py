@@ -1,12 +1,16 @@
 from flask import Flask, render_template
 import requests
 from Helpers import processResponse
+from MatchTrackerWorker import MatchTrackerWorker
 from match_status_watcher import MatchTracker
 
 
 app = Flask(__name__)
 
 match_tracker = MatchTracker()
+
+worker = MatchTrackerWorker(match_tracker, 5)
+worker.start()
 
 @app.route('/')
 def index():
@@ -17,7 +21,9 @@ def index():
 @app.route('/matches')
 def matches():
     match_updates = match_tracker.get_match_updates()
-    return render_template("matches.html", updates=match_updates)
+    match_tracker.push_to_match_change_history(match_updates)
+    return str(worker.get_match_change_history())
+    # return render_template("matches.html", updates=match_updates)
 
 if __name__ == '__main__':
     app.run(debug=True)
