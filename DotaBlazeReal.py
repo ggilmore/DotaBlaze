@@ -1,16 +1,14 @@
 from flask import Flask, render_template
 import requests
 from Helpers import processResponse
-from MatchTrackerWorker import MatchTrackerWorker
+from match_tracker_worker import MatchTrackerWorker
 from match_status_watcher import MatchTracker
-
 
 app = Flask(__name__)
 
-match_tracker = MatchTracker()
-
-worker = MatchTrackerWorker(match_tracker, 5)
-worker.start()
+# @app.before_first_request
+# def before():
+#     worker.start()
 
 @app.route('/')
 def index():
@@ -28,8 +26,13 @@ def matches():
 @app.route('/events')
 def events():
     events = worker.get_match_change_history()
+    print "events: " + str(events)
     return render_template("event-stream.html", events=events)
 
 if __name__ == '__main__':
+    match_tracker = MatchTracker()
+    worker = MatchTrackerWorker(match_tracker, 5)
+    worker.start()
     app.run(debug=True)
+
 
