@@ -1,5 +1,5 @@
 __author__ = 'gmgilmore'
-from TowerStatusTracker import towerStatus
+from tower_status_tracker import towerStatus
 
 def processResponse(arr):
     processedResponse = map(getMatchInfo, arr)

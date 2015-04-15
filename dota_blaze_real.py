@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 import requests
-from Helpers import processResponse
+from helpers import processResponse
 from match_tracker_worker import MatchTrackerWorker
 from match_status_watcher import MatchTracker
 

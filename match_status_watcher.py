@@ -1,4 +1,4 @@
-from Helpers import processResponse
+from helpers import processResponse
 
 import requests
 import time
