@@ -26,7 +26,6 @@ def matches():
 @app.route('/events')
 def events():
     events = worker.get_match_change_history()
-    print "events: " + str(events)
     return render_template("event-stream.html", events=events)
 
 if __name__ == '__main__':

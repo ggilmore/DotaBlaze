@@ -58,10 +58,8 @@ class MatchTracker(object):
     def generate_match_update_event_info(self, match_tuples):
         result = []
         for match in match_tuples[0][1]:
-            print "ended match: " + str(match)
             result.append(self.generate_event_info(match, event_types.EventType.MATCH_ENDED))
         for match in match_tuples[1][1]:
-            print "started match: " + str(match)
             result.append(self.generate_event_info(match, event_types.EventType.MATCH_STARTED))
         return result
 
