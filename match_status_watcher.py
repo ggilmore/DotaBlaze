@@ -1,5 +1,3 @@
-from helpers import processResponse
-
 import requests
 import time
 import event_types

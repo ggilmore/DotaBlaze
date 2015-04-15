@@ -8,50 +8,50 @@ TOP_INDEX = 11
 DIRE_INDEX = 11
 
 
-
-def getSideString(isRadiant):
-    if isRadiant:
+def get_side_string(is_radiant):
+    if is_radiant:
         side = u"Radiant"
     else:
         side =u"Dire"
     return side
 
-def towerStatus(isRadiant, towerStatusStringRaw):
-    sideTowerBitStringLength = 13
-    if len(towerStatusStringRaw) == sideTowerBitStringLength:
-        towerStatusString = towerStatusStringRaw[2:]
 
-        ancientBits = towerStatusString[:ANCIENT_INDEX]
-        bottomBits = towerStatusString[ANCIENT_INDEX:BOTTOM_INDEX]
-        middleBits = towerStatusString[BOTTOM_INDEX:MIDDLE_INDEX]
-        topBits = towerStatusString[MIDDLE_INDEX:TOP_INDEX]
+def tower_status(is_radiant, tower_status_string_raw):
+    side_tower_bit_string_length = 13
+    if len(tower_status_string_raw) == side_tower_bit_string_length:
+        tower_status_string = tower_status_string_raw[2:]
 
-        ancientDict = towerStatusHelper(u" Ancient", True, ancientBits)
-        bottomDict = towerStatusHelper(u" Bottom", False, bottomBits)
-        middleDict = towerStatusHelper(u" Middle", False, middleBits)
-        topDict = towerStatusHelper(u" Top", False, topBits)
+        ancient_bits = tower_status_string[:ANCIENT_INDEX]
+        bottom_bits = tower_status_string[ANCIENT_INDEX:BOTTOM_INDEX]
+        middle_bits = tower_status_string[BOTTOM_INDEX:MIDDLE_INDEX]
+        top_bits = tower_status_string[MIDDLE_INDEX:TOP_INDEX]
 
-        sideString = getSideString(isRadiant)
-        towerStatusNoSide = []
+        ancient_dict = tower_status_helper(u" Ancient", True, ancient_bits)
+        bottom_dict = tower_status_helper(u" Bottom", False, bottom_bits)
+        middle_dict = tower_status_helper(u" Middle", False, middle_bits)
+        top_dict = tower_status_helper(u" Top", False, top_bits)
 
-        for tempList in [topDict, middleDict, bottomDict, ancientDict]:
-            towerStatusNoSide.extend(tempList)
+        side_string = get_side_string(is_radiant)
+        tower_status_no_side = []
 
-        return [(sideString+entry[0], entry[1]) for entry in towerStatusNoSide]
+        for tempList in [top_dict, middle_dict, bottom_dict, ancient_dict]:
+            tower_status_no_side.extend(tempList)
+
+        return [(side_string+entry[0], entry[1]) for entry in tower_status_no_side]
     else:
         return []
 
 
-def towerStatusHelper(locationString, isAncient, towerStatusString):
-    if not isAncient:
-        assert len(towerStatusString) == 3
-        tier3 = towerStatusString[0] == u"1"
-        tier2 = towerStatusString[1] == u"1"
-        tier1 = towerStatusString[2] == u"1"
-        return [(locationString + u" Tier 3", tier3), (locationString + u" Tier 2", tier2),
-                (locationString + u" Tier 1", tier1)]
+def tower_status_helper(location_string, is_ancient, tower_status_string):
+    if not is_ancient:
+        assert len(tower_status_string) == 3
+        tier3 = tower_status_string[0] == u"1"
+        tier2 = tower_status_string[1] == u"1"
+        tier1 = tower_status_string[2] == u"1"
+        return [(location_string + u" Tier 3", tier3), (location_string + u" Tier 2", tier2),
+                (location_string + u" Tier 1", tier1)]
     else:
-        assert len(towerStatusString) == 2
-        top = towerStatusString[0] == u"1"
-        bot = towerStatusString[1] == u"1"
-        return [(locationString + u" Top", top), (locationString + u" Bottom", bot)]
+        assert len(tower_status_string) == 2
+        top = tower_status_string[0] == u"1"
+        bot = tower_status_string[1] == u"1"
+        return [(location_string + u" Top", top), (location_string + u" Bottom", bot)]
