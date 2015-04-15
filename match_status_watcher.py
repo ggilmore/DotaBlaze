@@ -30,7 +30,7 @@ class MatchTracker(object):
         r = requests.get(self.url)
         return [ent for ent in r.json()[u"result"][u"games"]]
 
-    def get_match_id(match):
+    def get_match_id(self, match):
         return match[u"match_id"]
 
     def get_match_teams(self, match):
