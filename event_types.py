@@ -6,6 +6,7 @@ class EventType(Enum):
     MATCH_ENDED = 2
     TOWER_DESTROYED = 3
     BARRACKS_DESTROYED = 4
+    ROSHAN_KILLED = 5
 
 def generate_description(event_type, event_information):
     if event_type == EventType.MATCH_STARTED:
@@ -21,6 +22,10 @@ def generate_description(event_type, event_information):
     elif event_type == EventType.BARRACKS_DESTROYED:
         return event_information["barracks_killer"] + " just destroyed " + event_information["barracks_loser"]+"'s " + \
             event_information["barracks_information"] + " barracks!"
+
+    elif event_type == EventType.ROSHAN_KILLED:
+        return "Roshan has been killed!"
+
     else:
         return "Whoops!"
 

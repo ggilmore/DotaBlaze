@@ -33,7 +33,11 @@ class Game:
 
         self.kill_count = ({"radiant": 0, "dire": 0}, {"radiant": 0, "dire": 0}, {"radiant": 0, "dire": 0})
 
+    def add_event_listener(self, listener):
+        self.event_listeners.append(listener)
+
     def update_game_status(self, info):
+        # TODO: Split up the info so that we can delegate the information to individual functions
         self.last_update_time = time.time()
 
     def update_tower_status(self, new_status):
@@ -77,6 +81,19 @@ class Game:
     def update_kill_count(self, new_count):
         old_count = self.kill_count
         self.kill_count = (new_count, old_count[0], old_count[1])
-        #TODO: add checking for ultra kills and listener notification
+        # TODO: add checking for ultra kills and listener notification
+
+    def update_game_timer(self, new_game_timer):
+        self.game_timer = new_game_timer
+        # TODO: What do we want to do with this?
+
+    def update_roshan_timer(self, new_roshan_timer):
+        old_timer = self.roshan_timer_status
+        self.roshan_timer_status = new_roshan_timer
+        if old_timer == 0 and self.roshan_timer_status > 0:
+            for listener in self.event_listeners:
+                listener.send_event(event_types.EventType.ROSHAN_KILLED, {})
+
+        # TODO: figure out how to identify who killed Roshan (look at player inventories?)
 
 
