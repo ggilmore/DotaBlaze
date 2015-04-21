@@ -2,12 +2,10 @@ import requests
 import time
 import event_types
 
-dota2_url = "https://api.steampowered.com/IDOTA2Match_570/GetLiveLeagueGames/v0001/?key=12B9C2C08AAC635D3A305D7D26793738"
-
 
 class MatchTracker(object):
-    def __init__(self, url=dota2_url):
-        self.url = url
+    def __init__(self, url, api_key):
+        self.url = url + api_key
         self.matches = self.get_matches()
         self.match_change_history = []
 

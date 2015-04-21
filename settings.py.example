@@ -1,0 +1,17 @@
+import os
+
+# Server settings
+HOST = os.environ.get('HOST', 'localhost')  # Set to 0.0.0.0 on server
+PORT = int(os.environ.get('PORT', 5000))    # Set to proxy port on server
+#SECRET_KEY = os.environ.get('SECRET_KEY')   # Set to enable secure cookies
+
+
+# Database settings
+# TODO: Delete if not needed
+#DATABASE_URL = os.environ.get('DATABASE_URL')
+
+
+# 3rd-party settings
+# TODO: API keys, etc
+DOTA2_URL = "https://api.steampowered.com/IDOTA2Match_570/GetLiveLeagueGames/v0001/?key="
+DOTA2_API_KEY = os.environ.get('DOTA2_API_KEY', '<put api key here>')
