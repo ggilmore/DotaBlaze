@@ -18,3 +18,8 @@ def register(app, match_tracker, worker):
     def events():
         events = worker.get_match_change_history()
         return render_template("event-stream.html", events=events)
+
+    @app.route('/match/<id>')
+    def match(id):
+        match_events = match_tracker.get_game_events(id)
+        return str(match_events)

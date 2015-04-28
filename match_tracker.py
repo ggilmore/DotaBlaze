@@ -1,6 +1,7 @@
 import requests
 import time
-import event_types
+from event_types import EventType, generate_description
+from game import Game
 
 
 class MatchTracker(object):
@@ -8,6 +9,18 @@ class MatchTracker(object):
         self.url = url + api_key
         self.matches = self.get_matches()
         self.match_change_history = []
+        # dict of game_id -> Game class
+        self.games = {}
+
+    def make_game(self, id, radiant_team_name="radiant-unknown", dire_team_name="dire-unknown"):
+        game = Game(id, radiant_team_name, dire_team_id)
+        self.games[id] = game
+
+    def get_game_events(self, id):
+        if id in self.games:
+            return self.games[id].get_game_events()
+        else:
+            return [(EventType.GAME_OVER, generate_description(EventType.GAME_OVER, {"id": id}))]
 
     def get_match_updates(self):
         old_match_id_set = {ent[u"match_id"] for ent in self.matches}
@@ -19,7 +32,6 @@ class MatchTracker(object):
         ended_match_ids = old_match_id_set - new_match_id_set
         new_match_ids = new_match_id_set - old_match_id_set
         return ((ended_match_ids, [match for match in old_matches if match["match_id"] in ended_match_ids]),
-
                 (new_match_ids, [match for match in self.matches if match["match_id"] in new_match_ids]))
 
     def get_matches(self):
