@@ -10,10 +10,9 @@ DIRE_INDEX = 11
 
 def get_side_string(is_radiant):
     if is_radiant:
-        side = u"Radiant"
+        return "radiant"
     else:
-        side =u"Dire"
-    return side
+        return "dire"
 
 
 def tower_status(is_radiant, tower_status_string_raw):
@@ -26,20 +25,25 @@ def tower_status(is_radiant, tower_status_string_raw):
         middle_bits = tower_status_string[BOTTOM_INDEX:MIDDLE_INDEX]
         top_bits = tower_status_string[MIDDLE_INDEX:TOP_INDEX]
 
-        ancient_dict = tower_status_helper(u" Ancient", True, ancient_bits)
-        bottom_dict = tower_status_helper(u" Bottom", False, bottom_bits)
-        middle_dict = tower_status_helper(u" Middle", False, middle_bits)
-        top_dict = tower_status_helper(u" Top", False, top_bits)
+        ancient_dict = tower_status_helper("ancient", True, ancient_bits)
+        bottom_dict = tower_status_helper("bottom", False, bottom_bits)
+        middle_dict = tower_status_helper("middle", False, middle_bits)
+        top_dict = tower_status_helper("top", False, top_bits)
 
         side_string = get_side_string(is_radiant)
-        tower_status_no_side = []
+        return_dict = {side_string: {}}
 
-        for tempList in [top_dict, middle_dict, bottom_dict, ancient_dict]:
-            tower_status_no_side.extend(tempList)
+        # add all lane dicts together
+        for lane_dict in [top_dict, middle_dict, bottom_dict]:
+            return_dict[side_string].update(lane_dict)
 
-        return [(side_string+entry[0], entry[1]) for entry in tower_status_no_side]
+        # add ancients in proper lanes
+        return_dict[side_string]["top"].update(ancient_dict["top"])
+        return_dict[side_string]["bottom"].update(ancient_dict["bottom"])
+
+        return return_dict
     else:
-        return []
+        return {}
 
 
 def tower_status_helper(location_string, is_ancient, tower_status_string):
@@ -48,10 +52,9 @@ def tower_status_helper(location_string, is_ancient, tower_status_string):
         tier3 = tower_status_string[0] == u"1"
         tier2 = tower_status_string[1] == u"1"
         tier1 = tower_status_string[2] == u"1"
-        return [(location_string + u" Tier 3", tier3), (location_string + u" Tier 2", tier2),
-                (location_string + u" Tier 1", tier1)]
+        return {location_string: {"1": tier1, "2": tier2, "3": tier3}}
     else:
         assert len(tower_status_string) == 2
         top = tower_status_string[0] == u"1"
         bot = tower_status_string[1] == u"1"
-        return [(location_string + u" Top", top), (location_string + u" Bottom", bot)]
+        return {"top": {location_string: top}, "bottom": {location_string: bot}}

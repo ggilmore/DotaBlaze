@@ -12,12 +12,20 @@
         <ul>
         <strong><p>Dire Team: {{ game.dire }}</p></strong>
         {% for k in game.dire_tower_status %}
-            <li>{{ k[0] }} : {{ "Alive" if k[1] else "Destroyed"}}</li>
+            {% for t in game.dire_tower_status[k] %}
+                {% for s in game.dire_tower_status[k][t] %}
+                <li>{{ s }} : {{ "Alive" if game.dire_tower_status[k][t][s] else "Destroyed"}}</li>
+                {% endfor %}
+            {% endfor %}
         {% endfor %}
         <br>
         <strong><p>Radiant Team: {{ game.radiant }}</p></strong>
         {% for k in game.radiant_tower_status %}
-            <li>{{ k[0] }} : {{ "Alive" if k[1] else "Destroyed" }}</li>
+            {% for t in game.radiant_tower_status[k] %}
+                {% for s in game.radiant_tower_status[k][t] %}
+                <li>{{ s }} : {{ "Alive" if game.radiant_tower_status[k][t][s] else "Destroyed"}}</li>
+                {% endfor %}
+            {% endfor %}
         {% endfor %}
         </ul>
     </li>
