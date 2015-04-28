@@ -22,6 +22,16 @@ class MatchTracker(object):
         else:
             return [(EventType.GAME_OVER, generate_description(EventType.GAME_OVER, {"id": id}))]
 
+    # TODO generate game objects on MatchTracker startup
+
+    # TODO generate new game objects when get_match_updates reports new games
+
+    # TODO remove ended games from the game object list
+
+    # TODO send game objects their updated game state dict (update function)
+
+    # TODO cleanup unused def's in this class
+
     def get_match_updates(self):
         old_match_id_set = {ent[u"match_id"] for ent in self.matches}
         old_matches = self.matches
