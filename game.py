@@ -3,15 +3,18 @@ import time
 import event_types
 
 class Game(object):
-    def __init__(self, id, radiant_team_name, dire_team_name, *listeners):
-        self.id = id
+    def __init__(self, match_id, *listeners):
+        self.id = match_id
         self.game_events = []
         self.event_listeners = []
         self.event_listeners.extend(*listeners)
 
         self.last_update_time = time.time()
 
-        self.team_names = (radiant_team_name, dire_team_name)
+        self.team_names = ("No Radiant Team Name",
+                           "No Dire Team Name")
+
+        self.team_ids = (0, 0)
 
         self.tower_status = {"radiant": {"top": {"1": True, "2": True, "3": True, "ancient": True},
                                          "middle": {"1": True, "2": True, "3": True},
@@ -20,7 +23,7 @@ class Game(object):
                                         "middle": {"1": True, "2": True, "3": True},
                                         "bottom": {"1": True, "2": True, "3": True, "ancient": True}}}}
 
-        self.barracks_status = {"radiant": {"top": {"melee": True, "ranged": True,},
+        self.barracks_status = {"radiant": {"top": {"melee": True, "ranged": True},
                                             "middle": {"melee": True, "ranged": True},
                                             "bottom": {"melee": True, "ranged": True}},
                                 "dire": {"top": {"melee": True, "ranged": True},
@@ -42,11 +45,28 @@ class Game(object):
     def set_team_names(self, names):
         self.team_names = names
 
+    def get_team_ids(self):
+        return self.team_ids
+
+    def set_team_ids(self, ids):
+        self.team_ids = ids
+
     def add_event_listener(self, listener):
         self.event_listeners.append(listener)
 
     def update_game_status(self, info):
         # TODO: Split up the info so that we can delegate the information to individual functions
+        new_tower_status = info["tower_status"]
+        new_barracks_status = info["barrack_status"]
+        new_kill_count = info["kill_count"]
+        new_game_timer = info["game_timer"]
+        new_rosh_status = info["rosh_status"]
+
+        self.update_tower_status(new_tower_status)
+        self.update_barracks_status(new_barracks_status)
+        self.update_kill_count(new_kill_count)
+        self.update_game_timer(new_game_timer)
+        self.update_roshan_timer(new_rosh_status)
         self.last_update_time = time.time()
 
     def update_tower_status(self, new_status):
