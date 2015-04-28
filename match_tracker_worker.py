@@ -3,7 +3,7 @@ __author__ = 'gmgilmore'
 from threading import Thread
 import time
 
-from match_status_watcher import MatchTracker
+from match_tracker import MatchTracker
 
 class MatchTrackerWorker(Thread):
     def __init__(self, tracker, interval):

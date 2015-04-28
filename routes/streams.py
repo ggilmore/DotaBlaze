@@ -1,13 +1,10 @@
-import requests
 from flask import render_template
 from helpers import process_response
-
 
 def register(app, match_tracker, worker):
     @app.route('/')
     def index():
-        r = requests.get("https://api.steampowered.com/IDOTA2Match_570/GetLiveLeagueGames/v0001/?key=12B9C2C08AAC635D3A305D7D26793738")
-        games = process_response(r.json()[u"result"][u"games"])
+        games = process_response(match_tracker.get_matches())
         return render_template("index.html", games=games)
 
     @app.route('/matches')

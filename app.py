@@ -1,7 +1,7 @@
 from flask import Flask, render_template
 from helpers import process_response
 from match_tracker_worker import MatchTrackerWorker
-from match_status_watcher import MatchTracker
+from match_tracker import MatchTracker
 
 from routes import streams
 
