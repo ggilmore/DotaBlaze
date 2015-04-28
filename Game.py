@@ -2,7 +2,7 @@ __author__ = 'gmgilmore'
 import time
 import event_types
 
-class Game:
+class Game(object):
     def __init__(self, id, radiant_team_name, dire_team_name, *listeners):
         self.id = id
 
