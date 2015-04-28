@@ -7,6 +7,5 @@ class EventListener(object):
     def receive_event(self, event_type, event_dscr):
         self.events.append((event_type, event_dscr))
 
-    def get_all_events(self):
-        self.events.copy
+
 

@@ -5,7 +5,7 @@ import event_types
 class Game(object):
     def __init__(self, id, radiant_team_name, dire_team_name, *listeners):
         self.id = id
-
+        self.game_events = []
         self.event_listeners = []
         self.event_listeners.extend(*listeners)
 
@@ -32,6 +32,15 @@ class Game(object):
         self.game_timer = 0
 
         self.kill_count = ({"radiant": 0, "dire": 0}, {"radiant": 0, "dire": 0}, {"radiant": 0, "dire": 0})
+
+    def get_game_events(self):
+        return self.game_events
+
+    def get_team_names(self):
+        return self.team_names
+
+    def set_team_names(self, names):
+        self.team_names = names
 
     def add_event_listener(self, listener):
         self.event_listeners.append(listener)

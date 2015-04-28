@@ -7,6 +7,7 @@ class EventType(Enum):
     TOWER_DESTROYED = 3
     BARRACKS_DESTROYED = 4
     ROSHAN_KILLED = 5
+    GAME_OVER = 6
 
 def generate_description(event_type, event_information):
     if event_type == EventType.MATCH_STARTED:
@@ -26,6 +27,11 @@ def generate_description(event_type, event_information):
     elif event_type == EventType.ROSHAN_KILLED:
         return "Roshan has been killed!"
 
+    elif event_type == EventType.GAME_OVER:
+        return "The game with event id: " + event_information["id"] + " is not being played currently."
+
     else:
         return "Whoops!"
+
+
 
