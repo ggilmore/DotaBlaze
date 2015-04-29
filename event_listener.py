@@ -5,7 +5,7 @@ class EventListener(object):
     def __init__(self):
         self.team_events = {} # dict of teams -> list of event tuples
 
-    def receive_event(self, team_id, event_type, event_dscr):
+    def receive_event(self, time_stamp, team_id, event_type, event_dscr):
         event_tuple = (event_type, event_dscr)
         if team_id in self.team_events:
             self.team_events[team_id].append(event_tuple)

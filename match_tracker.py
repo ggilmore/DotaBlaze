@@ -17,20 +17,17 @@ class MatchTracker(object):
             d_name, d_id = self.get_team_info(game.get(u"dire_team", {}))
             self.make_game(game[u"match_id"], r_name, r_id, d_name, d_id)
 
-
     def make_game(self, id, radiant_name, radiant_id, dire_name, dire_id):
         game = Game(id, [])
         game.set_team_names((radiant_name, dire_name))
         game.set_team_ids((radiant_id, dire_id))
         self.games[id] = game
 
-
     def get_game_events(self, id):
         if id in self.games:
             return self.games[id].get_game_events()
         else:
-            return [(EventType.GAME_OVER, generate_description(EventType.GAME_OVER, {"id": id}))]
-
+            return [(time.time(), EventType.GAME_OVER, generate_description(EventType.GAME_OVER, {"id": id}))]
 
     def get_team_info(self, team):
         team_name = team.get(u"team_name", "Radiant Unknown")
@@ -108,8 +105,9 @@ class MatchTracker(object):
         event_info.update({"match_id": self.get_match_id(match)})
         event_info.update(self.get_match_teams(match))
 
-        event_info.update({"description": generate_description(event_type, event_info["radiant_team_name"],
-                                                                           event_info["dire_team_name"])})
+        event_info.update({"description": generate_description(event_type, {"radiant_team": event_info["radiant_team_name"],
+                                                                            "dire_team": event_info["dire_team_name"]})})
+        print "WOW! " + str(event_info)
         return event_info
 
     def get_match_change_history(self):
