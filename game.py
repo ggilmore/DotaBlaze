@@ -2,6 +2,7 @@ __author__ = 'gmgilmore'
 import time
 import event_types
 
+
 class Game(object):
     def __init__(self, match_id, *listeners):
         self.id = match_id
@@ -93,12 +94,12 @@ class Game(object):
                                 listener.send_event(self.last_update_time, self.team_ids[0],
                                                     event_types.EventType.DESTROYED_TOWER, killer_description)
                                 listener.send_event(self.last_update_time, self.team_ids[1],
-                                                    event_types.EventType.LOST_TOWER, killer_description)
+                                                    event_types.EventType.LOST_TOWER, loser_description)
                             else:
                                 listener.send_event(self.last_update_time, self.team_ids[1],
-                                                    event_types.EventType.DESTROYED_TOWER, loser_description)
+                                                    event_types.EventType.DESTROYED_TOWER, killer_description)
                                 listener.send_event(self.last_update_time, self.team_ids[0],
-                                                    event_types.EventType.LOST_TOWER, killer_description)
+                                                    event_types.EventType.LOST_TOWER, loser_description)
 
                         self.game_events.append((self.last_update_time, event_types.EventType.DESTROYED_TOWER,
                                                  killer_description))
