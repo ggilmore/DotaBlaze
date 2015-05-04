@@ -17,17 +17,17 @@ class MatchTracker(object):
             d_name, d_id = self.get_team_info(game.get(u"dire_team", {}))
             self.make_game(game[u"match_id"], r_name, r_id, d_name, d_id)
 
-    def make_game(self, id, radiant_name, radiant_id, dire_name, dire_id):
-        game = Game(id, [])
+    def make_game(self, game_id, radiant_name, radiant_id, dire_name, dire_id):
+        game = Game(game_id, [])
         game.set_team_names((radiant_name, dire_name))
         game.set_team_ids((radiant_id, dire_id))
-        self.games[id] = game
+        self.games[game_id] = game
 
-    def get_game_events(self, id):
-        if id in self.games:
-            return self.games[id].get_game_events()
+    def get_game_events(self, game_id):
+        if game_id in self.games:
+            return self.games[game_id].get_game_events()
         else:
-            return [(time.time(), EventType.GAME_OVER, generate_description(EventType.GAME_OVER, {"id": id}))]
+            return [(time.time(), EventType.GAME_OVER, generate_description(EventType.GAME_OVER, {"id": game_id}))]
 
     def get_team_info(self, team):
         team_name = team.get(u"team_name", "Radiant Unknown")
