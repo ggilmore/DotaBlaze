@@ -2,6 +2,7 @@ import requests
 import time
 from event_types import EventType, generate_description
 from game import Game
+from helpers import get_match_info
 
 
 class MatchTracker(object):
@@ -34,15 +35,32 @@ class MatchTracker(object):
         team_id = team.get(u"team_id", 0)
         return (team_name, team_id)
 
+    def update_game(self, game_id, game_info):
+        if game_id in self.games:
+            g = get_match_info(game_info)
+
+            # update returns None, so it must be done beforehand
+            g[u"tower_status"] = g[u"dire_tower_status"]
+            g[u"tower_status"].update(g[u"radiant_tower_status"])
+            g[u"barrack_status"] = g[u"dire_barracks_status"]
+            g[u"barrack_status"].update(g[u"radiant_barracks_status"])
+
+            info = {}
+            info["tower_status"] = g[u"tower_status"]
+            info["barrack_status"] = g[u"barrack_status"]
+            info["kill_count"] = {"radiant": g[u"radiant_kill_count"], "dire": g[u"dire_kill_count"]}
+            info["game_timer"] = g[u"duration"]
+            info["rosh_status"] = g[u"roshan_respawn_timer"]
+
+            self.games[game_id].update_game_status(info)
+        else:
+            print "update_game error"
 
     # TODO generate new game objects when get_match_updates reports new games
 
-    # TODO remove ended games from the game object list
-
-    # TODO send game objects their updated game state dict (update function)
-
     # TODO cleanup unused def's in this class
 
+    # TODO simplify get_match_updates by grouping functionality
     def get_match_updates(self):
         old_match_id_set = {ent[u"match_id"] for ent in self.matches}
         old_matches = self.matches
@@ -52,6 +70,13 @@ class MatchTracker(object):
         # map(self.get_match_id(), self.matches)
         ended_match_ids = old_match_id_set - new_match_id_set
         new_match_ids = new_match_id_set - old_match_id_set
+
+        # update all game objects
+        for game in self.matches:
+            self.update_game(game[u"match_id"], game)
+
+        # TODO remove ended games from the game object list
+
         return ((ended_match_ids, [match for match in old_matches if match["match_id"] in ended_match_ids]),
                 (new_match_ids, [match for match in self.matches if match["match_id"] in new_match_ids]))
 
