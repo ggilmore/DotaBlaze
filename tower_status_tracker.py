@@ -9,6 +9,7 @@ BOTTOM_BARRACKS_INDEX = 2
 MIDDLE_BARRACKS_INDEX = 4
 TOP_BARRACKS_INDEX = 6
 
+
 def get_side_string(is_radiant):
     if is_radiant:
         return "radiant"
@@ -66,9 +67,9 @@ def barracks_status(is_radiant, barrack_status_string_raw):
     side_string = get_side_string(is_radiant)
     assert len(barrack_status_string_raw) == side_barracks_bit_string_length
 
-    top_bits = barrack_status_string_raw[MIDDLE_TOWER_INDEX:TOP_TOWER_INDEX]
-    middle_bits = barrack_status_string_raw[BOTTOM_BARRACKS_INDEX:MIDDLE_TOWER_INDEX]
-    bottom_bits = barrack_status_string_raw[:BOTTOM_TOWER_INDEX]
+    top_bits = barrack_status_string_raw[MIDDLE_BARRACKS_INDEX:TOP_BARRACKS_INDEX]
+    middle_bits = barrack_status_string_raw[BOTTOM_BARRACKS_INDEX:MIDDLE_BARRACKS_INDEX]
+    bottom_bits = barrack_status_string_raw[:BOTTOM_BARRACKS_INDEX]
 
     return {side_string: {"top": barracks_status_helper(top_bits), "middle": barracks_status_helper(middle_bits),
                           "bottom": barracks_status_helper(bottom_bits)}}

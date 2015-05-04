@@ -6,7 +6,7 @@ class EventListener(object):
         self.team_events = {}  # dict of teams -> list of event tuples
 
     def receive_event(self, time_stamp, team_id, event_type, event_dscr):
-        event_tuple = (event_type, event_dscr)
+        event_tuple = (time_stamp, event_type, event_dscr)
         if team_id in self.team_events:
             self.team_events[team_id].append(event_tuple)
         else:
@@ -16,7 +16,6 @@ class EventListener(object):
         not_found_event = (EventType.TEAM_NOT_FOUND, generate_description(EventType.TEAM_NOT_FOUND,
                                                                           {"team_id": team_id}))
         return self.team_events.get(team_id, not_found_event)
-
 
 
 

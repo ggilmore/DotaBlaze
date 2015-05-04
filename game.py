@@ -21,8 +21,8 @@ class Game(object):
                                          "middle": {"1": True, "2": True, "3": True},
                                          "bottom": {"1": True, "2": True, "3": True,  "ancient": True},
                                 "dire": {"top": {"1": True, "2": True, "3": True,  "ancient": True},
-                                        "middle": {"1": True, "2": True, "3": True},
-                                        "bottom": {"1": True, "2": True, "3": True, "ancient": True}}}}
+                                         "middle": {"1": True, "2": True, "3": True},
+                                         "bottom": {"1": True, "2": True, "3": True, "ancient": True}}}}
 
         self.barracks_status = {"radiant": {"top": {"melee": True, "ranged": True},
                                             "middle": {"melee": True, "ranged": True},
