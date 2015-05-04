@@ -58,3 +58,11 @@ def tower_status_helper(location_string, is_ancient, tower_status_string):
         top = tower_status_string[0] == u"1"
         bot = tower_status_string[1] == u"1"
         return {"top": {location_string: top}, "bottom": {location_string: bot}}
+
+
+def barrack_status(is_radiant, barrack_status_string_raw):
+    pass
+
+
+def barrack_status_helper(location_string, barrack_status_string):
+    pass
