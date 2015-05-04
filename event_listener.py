@@ -3,7 +3,7 @@ from event_types import EventType, generate_description
 
 class EventListener(object):
     def __init__(self):
-        self.team_events = {} # dict of teams -> list of event tuples
+        self.team_events = {}  # dict of teams -> list of event tuples
 
     def receive_event(self, time_stamp, team_id, event_type, event_dscr):
         event_tuple = (event_type, event_dscr)
