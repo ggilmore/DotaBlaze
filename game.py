@@ -19,10 +19,10 @@ class Game(object):
 
         self.tower_status = {"radiant": {"top": {"1": True, "2": True, "3": True, "ancient": True},
                                          "middle": {"1": True, "2": True, "3": True},
-                                         "bottom": {"1": True, "2": True, "3": True,  "ancient": True},
+                                         "bottom": {"1": True, "2": True, "3": True,  "ancient": True}},
                                 "dire": {"top": {"1": True, "2": True, "3": True,  "ancient": True},
                                          "middle": {"1": True, "2": True, "3": True},
-                                         "bottom": {"1": True, "2": True, "3": True, "ancient": True}}}}
+                                         "bottom": {"1": True, "2": True, "3": True, "ancient": True}}}
 
         self.barracks_status = {"radiant": {"top": {"melee": True, "ranged": True},
                                             "middle": {"melee": True, "ranged": True},
@@ -71,9 +71,9 @@ class Game(object):
         self.update_roshan_timer(new_rosh_status)
 
     def update_tower_status(self, new_status):
-        for side in new_status:
-            for location in side[1]:
-                for tier in location[1]:
+        for side in new_status.items():
+            for location in side[1].items():
+                for tier in location[1].items():
                     if self.tower_status[side[0]][location[0]][tier[0]] != new_status[side[0]][location[0]][tier[0]]:
                         radiant_string = self.team_names[0] + " (Radiant)"
                         dire_string = self.team_names[1] + " (Dire)"
@@ -133,9 +133,9 @@ class Game(object):
         return formatted_dict
 
     def update_barracks_status(self, new_status):
-        for side in new_status:
-            for location in side[1]:
-                for type in location[1]:
+        for side in new_status.items():
+            for location in side[1].items():
+                for type in location[1].items():
                     if self.barracks_status[side[0]][location[0]][type[0]] != new_status[side[0]][location[0]][type[0]]:
 
                         radiant_string = self.team_names[0] + " (Radiant)"

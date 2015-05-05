@@ -63,20 +63,23 @@ def tower_status_helper(location_string, is_ancient, tower_status_string):
 
 
 def barracks_status(is_radiant, barrack_status_string_raw):
-    side_barracks_bit_string_length = 6
+    side_barracks_bit_string_length = 8
     side_string = get_side_string(is_radiant)
     assert len(barrack_status_string_raw) == side_barracks_bit_string_length
 
-    top_bits = barrack_status_string_raw[MIDDLE_BARRACKS_INDEX:TOP_BARRACKS_INDEX]
-    middle_bits = barrack_status_string_raw[BOTTOM_BARRACKS_INDEX:MIDDLE_BARRACKS_INDEX]
-    bottom_bits = barrack_status_string_raw[:BOTTOM_BARRACKS_INDEX]
+    # remove the "0b" from the binary string
+    barrack_status_string = barrack_status_string_raw[2:]
+
+    top_bits = barrack_status_string[MIDDLE_BARRACKS_INDEX:TOP_BARRACKS_INDEX]
+    middle_bits = barrack_status_string[BOTTOM_BARRACKS_INDEX:MIDDLE_BARRACKS_INDEX]
+    bottom_bits = barrack_status_string[:BOTTOM_BARRACKS_INDEX]
 
     return {side_string: {"top": barracks_status_helper(top_bits), "middle": barracks_status_helper(middle_bits),
                           "bottom": barracks_status_helper(bottom_bits)}}
 
 
 def barracks_status_helper(barracks_status_string):
-    assert barracks_status_string == 2
+    assert len(barracks_status_string) == 2
     melee_status = barracks_status_string[0] == u"1"
     ranged_status = barracks_status_string[1] == u"2"
     return {"melee": melee_status, "ranged": ranged_status}
