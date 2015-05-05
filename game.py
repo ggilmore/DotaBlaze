@@ -81,7 +81,7 @@ class Game(object):
                         dire_string = self.team_names[1] + " (Dire)"
 
                         tower_killer = radiant_string if side[0] != "radiant" else dire_string
-                        tower_loser = radiant_string if tower_killer != "radiant" else dire_string
+                        tower_loser = radiant_string if tower_killer == dire_string else dire_string
                         tower_information = location[0] + " tier " + tier[0]
 
                         info = {"tower_killer": tower_killer, "tower_loser": tower_loser,
@@ -144,7 +144,7 @@ class Game(object):
                         dire_string = self.team_names[1] + " (Dire)"
 
                         barracks_killer = radiant_string if side[0] != "radiant" else dire_string
-                        barracks_loser = radiant_string if barracks_killer != "radiant" else dire_string
+                        barracks_loser = radiant_string if barracks_killer == dire_string else dire_string
                         barracks_information = location[0] + " " + type[0]
 
                         info = {"barracks_killer": barracks_killer, "barracks_loser": barracks_loser,

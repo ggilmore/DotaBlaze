@@ -5,6 +5,7 @@ import time
 
 from match_tracker import MatchTracker
 
+
 class MatchTrackerWorker(Thread):
     def __init__(self, tracker, interval):
         Thread.__init__(self)
@@ -27,3 +28,4 @@ if __name__ == "__main__":
     a.start()
     while True:
         pass
+
