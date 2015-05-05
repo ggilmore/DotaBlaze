@@ -27,8 +27,8 @@ def get_match_info(game):
             u"dire_barracks_status": barracks_status(False, bin(game[u"scoreboard"][u"dire"][u"barracks_state"])),
             u"radiant_tower_status": tower_status(True, bin(game[u"scoreboard"][u"radiant"][u"tower_state"])),
             u"radiant_barracks_status": barracks_status(False, bin(game[u"scoreboard"][u"radiant"][u"barracks_state"])),
-            u"duration": game[u"duration"],
-            u"roshan_respawn_timer": game[u"roshan_respawn_timer"],
+            u"duration": game.get(u"duration", 0),
+            u"roshan_respawn_timer": game.get(u"roshan_respawn_timer", 0),
             u"radiant_kill_count": game[u"scoreboard"][u"radiant"][u"score"],
             u"dire_kill_count": game[u"scoreboard"][u"dire"][u"score"],
             })

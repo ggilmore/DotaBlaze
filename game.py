@@ -64,8 +64,10 @@ class Game(object):
         new_game_timer = info["game_timer"]
         new_rosh_status = info["rosh_status"]
 
-        self.update_tower_status(new_tower_status)
-        self.update_barracks_status(new_barracks_status)
+        if new_tower_status != None:
+            self.update_tower_status(new_tower_status)
+        if new_barracks_status != None:
+            self.update_barracks_status(new_barracks_status)
         self.update_kill_count(new_kill_count)
         self.update_game_timer(new_game_timer)
         self.update_roshan_timer(new_rosh_status)
