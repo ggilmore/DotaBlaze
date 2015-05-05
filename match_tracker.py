@@ -54,7 +54,7 @@ class MatchTracker(object):
 
             self.games[game_id].update_game_status(info)
         else:
-            print "update_game error"
+            print "game does not exist"
 
     # TODO generate new game objects when get_match_updates reports new games
 
