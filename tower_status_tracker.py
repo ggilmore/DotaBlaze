@@ -18,34 +18,31 @@ def get_side_string(is_radiant):
 
 
 def tower_status(is_radiant, tower_status_string_raw):
-    side_tower_bit_string_length = 13
-    if len(tower_status_string_raw) == side_tower_bit_string_length:
-        tower_status_string = tower_status_string_raw[2:]
+    # remove the "0b" from the binary string and pad to length of 11
+    tower_status_string = tower_status_string_raw[2:].zfill(11)
 
-        ancient_bits = tower_status_string[:ANCIENT_TOWER_INDEX]
-        bottom_bits = tower_status_string[ANCIENT_TOWER_INDEX:BOTTOM_TOWER_INDEX]
-        middle_bits = tower_status_string[BOTTOM_TOWER_INDEX:MIDDLE_TOWER_INDEX]
-        top_bits = tower_status_string[MIDDLE_TOWER_INDEX:TOP_TOWER_INDEX]
+    ancient_bits = tower_status_string[:ANCIENT_TOWER_INDEX]
+    bottom_bits = tower_status_string[ANCIENT_TOWER_INDEX:BOTTOM_TOWER_INDEX]
+    middle_bits = tower_status_string[BOTTOM_TOWER_INDEX:MIDDLE_TOWER_INDEX]
+    top_bits = tower_status_string[MIDDLE_TOWER_INDEX:TOP_TOWER_INDEX]
 
-        ancient_dict = tower_status_helper("ancient", True, ancient_bits)
-        bottom_dict = tower_status_helper("bottom", False, bottom_bits)
-        middle_dict = tower_status_helper("middle", False, middle_bits)
-        top_dict = tower_status_helper("top", False, top_bits)
+    ancient_dict = tower_status_helper("ancient", True, ancient_bits)
+    bottom_dict = tower_status_helper("bottom", False, bottom_bits)
+    middle_dict = tower_status_helper("middle", False, middle_bits)
+    top_dict = tower_status_helper("top", False, top_bits)
 
-        side_string = get_side_string(is_radiant)
-        return_dict = {side_string: {}}
+    side_string = get_side_string(is_radiant)
+    return_dict = {side_string: {}}
 
-        # add all lane dicts together
-        for lane_dict in [top_dict, middle_dict, bottom_dict]:
-            return_dict[side_string].update(lane_dict)
+    # add all lane dicts together
+    for lane_dict in [top_dict, middle_dict, bottom_dict]:
+        return_dict[side_string].update(lane_dict)
 
-        # add ancients in proper lanes
-        return_dict[side_string]["top"].update(ancient_dict["top"])
-        return_dict[side_string]["bottom"].update(ancient_dict["bottom"])
+    # add ancients in proper lanes
+    return_dict[side_string]["top"].update(ancient_dict["top"])
+    return_dict[side_string]["bottom"].update(ancient_dict["bottom"])
 
-        return return_dict
-    else:
-        return {}
+    return return_dict
 
 
 def tower_status_helper(location_string, is_ancient, tower_status_string):
@@ -63,19 +60,17 @@ def tower_status_helper(location_string, is_ancient, tower_status_string):
 
 
 def barracks_status(is_radiant, barrack_status_string_raw):
-    side_barracks_bit_string_length = 8
-    side_string = get_side_string(is_radiant)
-    assert len(barrack_status_string_raw) == side_barracks_bit_string_length
-
-    # remove the "0b" from the binary string
-    barrack_status_string = barrack_status_string_raw[2:]
+    # remove the "0b" from the binary string and pad to length of 6
+    barrack_status_string = barrack_status_string_raw[2:].zfill(6)
 
     top_bits = barrack_status_string[MIDDLE_BARRACKS_INDEX:TOP_BARRACKS_INDEX]
     middle_bits = barrack_status_string[BOTTOM_BARRACKS_INDEX:MIDDLE_BARRACKS_INDEX]
     bottom_bits = barrack_status_string[:BOTTOM_BARRACKS_INDEX]
 
-    return {side_string: {"top": barracks_status_helper(top_bits), "middle": barracks_status_helper(middle_bits),
-                          "bottom": barracks_status_helper(bottom_bits)}}
+    return {get_side_string(is_radiant):
+                {"top": barracks_status_helper(top_bits),
+                "middle": barracks_status_helper(middle_bits),
+                "bottom": barracks_status_helper(bottom_bits)}}
 
 
 def barracks_status_helper(barracks_status_string):
