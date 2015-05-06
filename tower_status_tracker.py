@@ -76,5 +76,5 @@ def barracks_status(is_radiant, barrack_status_string_raw):
 def barracks_status_helper(barracks_status_string):
     assert len(barracks_status_string) == 2
     melee_status = barracks_status_string[0] == u"1"
-    ranged_status = barracks_status_string[1] == u"2"
+    ranged_status = barracks_status_string[1] == u"1"
     return {"melee": melee_status, "ranged": ranged_status}

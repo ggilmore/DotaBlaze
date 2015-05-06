@@ -58,6 +58,8 @@ class Game(object):
     def update_game_status(self, info):
         self.last_update_time = time.time()
 
+        print str(info)
+
         new_tower_status = info["tower_status"]
         new_barracks_status = info["barrack_status"]
         new_kill_count = info["kill_count"]
@@ -137,15 +139,16 @@ class Game(object):
     def update_barracks_status(self, new_status):
         for side in new_status.items():
             for location in side[1].items():
-                for type in location[1].items():
-                    if self.barracks_status[side[0]][location[0]][type[0]] != new_status[side[0]][location[0]][type[0]]:
+                for barracks_type in location[1].items():
+                    if self.barracks_status[side[0]][location[0]][barracks_type[0]] != \
+                            new_status[side[0]][location[0]][barracks_type[0]]:
 
                         radiant_string = self.team_names[0] + " (Radiant)"
                         dire_string = self.team_names[1] + " (Dire)"
 
                         barracks_killer = radiant_string if side[0] != "radiant" else dire_string
                         barracks_loser = radiant_string if barracks_killer == dire_string else dire_string
-                        barracks_information = location[0] + " " + type[0]
+                        barracks_information = location[0] + " " + barracks_type[0]
 
                         info = {"barracks_killer": barracks_killer, "barracks_loser": barracks_loser,
                                 "barracks_information": barracks_information}
@@ -170,7 +173,7 @@ class Game(object):
                         self.game_events.append((self.last_update_time, event_types.EventType.DESTROYED_BARRACKS,
                                                  killer_description))
 
-                        self.barracks_status[side[0]][location[0]][type[0]] = new_status[side[0]][location[0]][type[0]]
+                        self.barracks_status[side[0]][location[0]][barracks_type[0]] = new_status[side[0]][location[0]][barracks_type[0]]
 
     def update_kill_count(self, new_count):
         old_count = self.kill_count
@@ -187,7 +190,8 @@ class Game(object):
         if old_timer == 0 and self.roshan_timer_status > 0:
             for listener in self.event_listeners:
                 listener.send_event(event_types.EventType.ROSHAN_KILLED, {})
-        self.game_events.append((self.last_update_time, event_types.EventType.ROSHAN_KILLED, {}))
+            self.game_events.append((self.last_update_time, event_types.EventType.ROSHAN_KILLED,
+                                     event_types.generate_description(event_types.EventType.ROSHAN_KILLED, {})))
 
         # TODO: figure out how to identify who killed Roshan (look at player inventories?)
 

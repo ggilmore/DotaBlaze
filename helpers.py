@@ -32,4 +32,15 @@ def get_match_info(game):
             u"radiant_kill_count": game[u"scoreboard"][u"radiant"][u"score"],
             u"dire_kill_count": game[u"scoreboard"][u"dire"][u"score"],
             })
+    else:
+        dictionary.update({
+            u"dire_tower_status": {},
+            u"dire_barracks_status": {},
+            u"radiant_tower_status": {},
+            u"radiant_barracks_status": {},
+            u"duration": {},
+            u"roshan_respawn_timer": {},
+            u"radiant_kill_count": {},
+            u"dire_kill_count": {},
+            })
     return dictionary
